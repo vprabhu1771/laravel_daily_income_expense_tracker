@@ -40,4 +40,11 @@ class ListTransactions extends ListRecords
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', TransactionType::EXPENSE)),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TransactionResource\Widgets\TransactionOverview::class,
+        ];
+    }
 }
