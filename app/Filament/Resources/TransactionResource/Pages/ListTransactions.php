@@ -28,10 +28,12 @@ class ListTransactions extends ListRecords
     {
         return [
             'All' => Tab::make(),
+
             'Income' => Tab::make()
                 ->badge(Transaction::query()->where('type', TransactionType::INCOME)->count())
                 ->badgeColor('success')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', TransactionType::INCOME)),
+                
             'Expense' => Tab::make()
                 ->badge(Transaction::query()->where('type', TransactionType::EXPENSE)->count())
                 ->badgeColor('danger')
