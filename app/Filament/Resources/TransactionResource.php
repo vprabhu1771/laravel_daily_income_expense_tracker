@@ -25,6 +25,12 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\DatePicker::make('date')
+                    ->default(now())
+                    ->displayFormat('d-m-Y')
+                    ->placeholder('dd-mm-yyyy')
+                    ->native(false)
+                    ->required(),
                 Forms\Components\Radio::make('type')
                     ->required()
                     ->options(TransactionType::class)
