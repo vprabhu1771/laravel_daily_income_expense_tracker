@@ -23,15 +23,24 @@ class TransactionOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        // In your widget or wherever you are defining the stats:
-        $income = number_format($this->getPageTableQuery()->where('type', 'income')->sum('amount'), 2);
-        $expense = number_format($this->getPageTableQuery()->where('type', 'expense')->sum('amount'), 2);
+        // Fetch the raw income and expense sums
+        $income = $this->getPageTableQuery()->where('type', 'income')->sum('amount');
+        $expense = $this->getPageTableQuery()->where('type', 'expense')->sum('amount');
+
+        // Calculate the balance using raw values
+        $balance = $income - $expense;
+
+        // Format income, expense, and balance for display
+        $formattedIncome = number_format($income, 2);
+        $formattedExpense = number_format($expense, 2);
+        $formattedBalance = number_format($balance, 2);
 
         return [
             Stat::make('Total Transactions', $this->getPageTableQuery()->count()),
-            Stat::make('Total Income Amount', '$ ' . $income),
-            Stat::make('Total Expense Amount', '$ ' . $expense),
-            // Stat::make('Average time on page', '3:12'),
+            Stat::make('Total Income Amount', '$ ' . $formattedIncome),
+            Stat::make('Total Expense Amount', '$ ' . $formattedExpense),
+            Stat::make('Balance Amount', '$ ' . $formattedBalance),
         ];
     }
+
 }
