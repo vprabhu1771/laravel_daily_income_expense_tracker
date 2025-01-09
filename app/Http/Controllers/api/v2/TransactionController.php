@@ -52,4 +52,24 @@ class TransactionController extends Controller
             'data' => $transaction,
         ], 201);
     }
+
+    /**
+     * Get a single transaction by ID.
+     */
+    public function show($id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaction not found.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $transaction,
+        ]);
+    }
 }
