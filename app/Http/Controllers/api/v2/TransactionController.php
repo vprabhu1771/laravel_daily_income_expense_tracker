@@ -72,4 +72,34 @@ class TransactionController extends Controller
             'data' => $transaction,
         ]);
     }
+
+    /**
+     * Update an existing transaction.
+     */
+    public function update(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaction not found.',
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'type' => 'nullable|in:INCOME,EXPENSE',
+            'amount' => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
+            'date' => 'nullable|date',
+        ]);
+
+        // Update only fields provided in the request
+        $transaction->update(array_filter($validated));
+
+        return response()->json([
+            'success' => true,
+            'data' => $transaction,
+        ]);
+    }
 }
