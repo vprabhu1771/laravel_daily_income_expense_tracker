@@ -23,7 +23,7 @@ class TransactionController extends Controller
         })->get();
 
         return response()->json([
-            'success' => true,
+            // 'success' => true,
             'data' => $transactions,
         ]);
     }
@@ -34,7 +34,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'type' => 'required|in:income,expense',
+            'type' => 'required|in:INCOME,EXPENSE',
             'amount' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'date' => 'required|date',
